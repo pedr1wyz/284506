@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plantas do Brasil - Mapas Interativos</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        
+        header {
+            background-color: #2e7d32;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        nav {
+            background-color: #1b5e20;
+            padding: 10px 0;
+        }
+        
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        
+        nav li {
+            margin: 0 15px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        
+        .map-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .map-btn {
+            background-color: #388e3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .map-btn:hover {
+            background-color: #2e7d32;
+        }
+        
+        .map-btn.active {
+            background-color: #1b5e20;
+        }
+        
+        .map-container {
+            background-color: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            display: none;
+        }
+        
+        .map-container.active {
+            display: block;
+        }
+        
+        iframe {
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+        }
+        
+        footer {
+            background-color: #1b5e20;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Plantas do Brasil</h1>
+        <p>Mapas interativos sobre clima, solo e vegetação</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#mapas">Mapas</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container" id="home">
+        <h2>Explore a diversidade da flora brasileira</h2>
+        <p>O Brasil possui uma das maiores biodiversidades do planeta, com diversos tipos de clima, solo e vegetação. Utilize nossos mapas interativos para entender melhor as características de cada região.</p>
+        
+        <div class="map-buttons" id="mapas">
+            <button class="map-btn active" data-map="vegetacao">Vegetação</button>
+            <button class="map-btn" data-map="clima">Clima</button>
+            <button class="map-btn" data-map="solo">Solos</button>
+            <button class="map-btn" data-map="biomas">Biomas</button>
+        </div>
+        
+        <div class="map-container active" id="vegetacao-map">
+            <h3>Mapa de Vegetação do Brasil</h3>
+            <iframe height="800px" src="https://geoportal-ibge.maps.arcgis.com/apps/MapSeries/index.html?appid=c26c269f75544597b3c93661e25f28f5"></iframe>
+        </div>
+        
+        <div class="map-container" id="clima-map">
+            <h3>Mapa Climático do Brasil</h3>
+            <iframe height="800px" src="https://geoportal-ibge.maps.arcgis.com/apps/webappviewer/index.html?id=9a600e5d9c7745e8887b351fdede7be1"></iframe>
+        </div>
+        
+        <div class="map-container" id="solo-map">
+            <h3>Mapa de Solos do Brasil</h3>
+            <iframe height="800px" src="https://geoportal-ibge.maps.arcgis.com/apps/webappviewer/index.html?id=6a6c1e1e1a3a4a8e8a1a1a1a1a1a1a1a"></iframe>
+        </div>
+        
+        <div class="map-container" id="biomas-map">
+            <h3>Mapa de Biomas Brasileiros</h3>
+            <iframe height="800px" src="https://geoportal-ibge.maps.arcgis.com/apps/webappviewer/index.html?id=7a6c1e1e1a3a4a8e8a1a1a1a1a1a1a1a"></iframe>
+        </div>
+    </div>
+    
+    <div class="container" id="sobre">
+        <h2>Sobre este projeto</h2>
+        <p>Este site reúne mapas interativos oficiais do IBGE (Instituto Brasileiro de Geografia e Estatística) para ajudar no estudo da vegetação brasileira e suas relações com clima e solo.</p>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 Plantas do Brasil - Dados do IBGE</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.map-btn');
+            const mapContainers = document.querySelectorAll('.map-container');
+            
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons and containers
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                    mapContainers.forEach(container => container.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Show corresponding map
+                    const mapId = this.getAttribute('data-map') + '-map';
+                    document.getElementById(mapId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
